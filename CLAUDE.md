@@ -26,7 +26,12 @@ pnpm dev              # 開発サーバー（http://localhost:3000）
 pnpm lint             # Biome（lint とフォーマットのチェック）
 pnpm format           # フォーマットを適用
 pnpm typecheck        # 型チェック（next typegen + tsc）
+pnpm db:generate      # schema.ts の変更から マイグレーションの SQL を作る
+pnpm db:migrate       # マイグレーションを DB に適用する（web/.env.local の DATABASE_URL）
 ```
+
+- 環境変数は `web/.env.local` に書く（コミットしない）。必要な変数を増やしたら `web/.env.example` に、値を空にして追記する
+- `web/.env.local` の中身を表示・出力しない（接続文字列などの秘密が含まれる）
 
 ## 振る舞いのルール
 
