@@ -23,7 +23,7 @@ PostgreSQL（Neon）✅
 
 | 要素 | 技術 | 役割 | 状態 |
 |---|---|---|---|
-| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログイン、体重・体脂肪率の入力と一覧（編集・削除・グラフは作成中） |
+| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログイン、体重・体脂肪率の入力・一覧・編集・削除（グラフは作成中） |
 | 画面部品 | shadcn/ui（Base UI） | ボタン、フォーム、カードなど | ✅ |
 | ai | Python | 分析・要約など | 🔜 |
 | データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用と体重・体脂肪率（`weight_record`）のテーブル |
@@ -121,7 +121,7 @@ web/src/
 ├── app/             # 画面（ルーティング）
 ├── features/        # 記録の種類ごとのまとまり
 │   └── weight/
-│       ├── components/     # 画面部品（入力フォーム、一覧など）
+│       ├── components/     # 画面部品（入力フォーム、一覧、一覧の行の編集・削除など）
 │       ├── schema.ts       # DB テーブル定義
 │       ├── data.ts         # 読み取りの処理（ページから呼ぶ）
 │       ├── actions.ts      # 保存・更新・削除の処理（Server Action。フォームから呼ぶ）
