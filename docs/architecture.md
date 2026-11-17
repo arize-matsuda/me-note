@@ -101,7 +101,7 @@ me-note/
 │       │   ├── signup/        # 新規登録画面
 │       │   └── api/auth/      # Better Auth の API
 │       ├── features/          # 記録の種類ごとのまとまり
-│       │   └── weight/        # 体重・体脂肪率（schema.ts: テーブル定義）
+│       │   └── weight/        # 体重・体脂肪率（テーブル定義、読み書きの処理、入力チェック）
 │       └── shared/            # 複数の記録で使うもの
 │           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
 │           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
@@ -113,19 +113,25 @@ me-note/
 
 ### web/src の構成方針
 
-記録の種類ごとにまとめる。`features/` は体重・体脂肪率から作り始めた（今はテーブル定義の `schema.ts` だけ）。
+記録の種類ごとにまとめる。`features/` は体重・体脂肪率から作り始めた。
 
 ```
 web/src/
 ├── app/             # 画面（ルーティング）
 ├── features/        # 記録の種類ごとのまとまり
 │   └── weight/
-│       ├── components/   # 入力フォーム、グラフなど
-│       ├── actions.ts    # 保存・取得の処理
-│       ├── schema.ts     # DB テーブル定義
-│       └── types.ts
+│       ├── components/     # 入力フォーム、グラフなど 🔜
+│       ├── schema.ts       # DB テーブル定義
+│       ├── data.ts         # 読み取りの処理（ページから呼ぶ）
+│       ├── actions.ts      # 保存・更新・削除の処理（Server Action。フォームから呼ぶ）
+│       ├── validation.ts   # 入力チェック（ログインや DB に関係しない関数）
+│       └── *.test.ts       # テスト（対象のファイルの隣に置く）
 └── shared/          # 複数の記録で使うもの
 ```
+
+- **データの読み書きは `data.ts` と `actions.ts` に集める**。どちらも最初に `getCurrentUser()` を呼び、ログイン中のユーザーの記録だけを読み書きする。ページやコンポーネントから DB を直接読まない
+- `data.ts` が画面に返すのは、画面に必要な項目だけ（ユーザー ID などは返さない）
+- 入力チェックは、ログインや DB に関係しない関数として書き、テストする
 
 - 記録の種類どうし（例：`weight` と `workout`）は直接 import しない
 - 2つ目の記録を作るときに、本当に共通なものだけ `shared/` に移す
