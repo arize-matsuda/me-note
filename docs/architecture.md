@@ -23,7 +23,7 @@ PostgreSQL（Neon）✅
 
 | 要素 | 技術 | 役割 | 状態 |
 |---|---|---|---|
-| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログインまで。体重・体脂肪率を作成中 |
+| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログイン、体重・体脂肪率の入力と一覧（編集・削除・グラフは作成中） |
 | 画面部品 | shadcn/ui（Base UI） | ボタン、フォーム、カードなど | ✅ |
 | ai | Python | 分析・要約など | 🔜 |
 | データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用と体重・体脂肪率（`weight_record`）のテーブル |
@@ -97,11 +97,12 @@ me-note/
 │       ├── proxy.ts           # ログインしていない人を /login に移動させる
 │       ├── proxy.test.ts      # proxy.ts のテスト
 │       ├── app/               # 画面（ルーティング）
+│       │   ├── weight/        # 体重・体脂肪率の画面（入力と一覧）
 │       │   ├── login/         # ログイン画面
 │       │   ├── signup/        # 新規登録画面
 │       │   └── api/auth/      # Better Auth の API
 │       ├── features/          # 記録の種類ごとのまとまり
-│       │   └── weight/        # 体重・体脂肪率（テーブル定義、読み書きの処理、入力チェック）
+│       │   └── weight/        # 体重・体脂肪率（テーブル定義、読み書きの処理、入力チェック、画面部品）
 │       └── shared/            # 複数の記録で使うもの
 │           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
 │           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
@@ -120,11 +121,12 @@ web/src/
 ├── app/             # 画面（ルーティング）
 ├── features/        # 記録の種類ごとのまとまり
 │   └── weight/
-│       ├── components/     # 入力フォーム、グラフなど 🔜
+│       ├── components/     # 画面部品（入力フォーム、一覧など）
 │       ├── schema.ts       # DB テーブル定義
 │       ├── data.ts         # 読み取りの処理（ページから呼ぶ）
 │       ├── actions.ts      # 保存・更新・削除の処理（Server Action。フォームから呼ぶ）
 │       ├── validation.ts   # 入力チェック（ログインや DB に関係しない関数）
+│       ├── format.ts       # 表示の形（日付、小数点以下1桁）
 │       └── *.test.ts       # テスト（対象のファイルの隣に置く）
 └── shared/          # 複数の記録で使うもの
 ```
