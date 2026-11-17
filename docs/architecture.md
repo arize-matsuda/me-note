@@ -32,7 +32,8 @@ PostgreSQL（Neon）✅
 | 公開先 | Vercel（`*.vercel.app`、実行地域はシンガポール） | web の公開。main にマージすると本番に反映、PR ごとにプレビューを作る | ✅ |
 | lint / フォーマット | Biome | コードの書き方をそろえる | ✅ |
 | 型チェック | TypeScript（`pnpm typecheck`） | 型の誤りを見つける | ✅ |
-| CI | GitHub Actions | PR ごとに lint と型チェックを実行。通らないとマージできない | ✅ |
+| テスト | Vitest（`pnpm test`） | 関数や処理が正しく動くかを確かめる（ユニットテスト） | ✅ |
+| CI | GitHub Actions | PR ごとに lint・型チェック・テストを実行。通らないとマージできない | ✅ |
 
 ## 守るルール
 
@@ -74,17 +75,27 @@ PostgreSQL（Neon）✅
 - PR ごとにプレビューを作る。プレビューは `dev` ブランチの DB を使い、マイグレーションは実行しない
 - 環境変数は Vercel の管理画面で設定する（一覧は [decisions/0011](decisions/0011-deploy.md)）
 
+## テスト
+
+- テストファイルは、対象のファイルの隣に `<名前>.test.ts` として置く（例: `web/src/proxy.test.ts`）
+- 計算や入力チェックなどの処理を書いたら、テストも書く。見た目だけの変更には書かなくてよい
+- DB を読み込んで表示する画面（async のサーバーコンポーネント）は、ユニットテストでは確かめられない。E2E テストは必要になったときに決める
+
+背景は [decisions/0012](decisions/0012-test.md)。
+
 ## ディレクトリ
 
 ```
 me-note/
 ├── web/                       # Next.js
 │   ├── vercel.json            # Vercel の設定（実行地域、本番のマイグレーション）
+│   ├── vitest.config.mts      # テスト（Vitest）の設定
 │   ├── drizzle.config.ts      # マイグレーションの設定
 │   ├── drizzle/               # マイグレーションの SQL ファイル
 │   ├── components.json        # shadcn/ui の設定（部品の置き場所など）
 │   └── src/
 │       ├── proxy.ts           # ログインしていない人を /login に移動させる
+│       ├── proxy.test.ts      # proxy.ts のテスト
 │       ├── app/               # 画面（ルーティング）
 │       │   ├── login/         # ログイン画面
 │       │   ├── signup/        # 新規登録画面

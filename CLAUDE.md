@@ -26,6 +26,8 @@ pnpm dev              # 開発サーバー（http://localhost:3000）
 pnpm lint             # Biome（lint とフォーマットのチェック）
 pnpm format           # フォーマットを適用
 pnpm typecheck        # 型チェック（next typegen + tsc）
+pnpm test             # テスト（Vitest）を1回実行する
+pnpm test:watch       # ファイルを変えるたびにテストを実行する
 pnpm db:generate      # schema.ts の変更から マイグレーションの SQL を作る
 pnpm db:migrate       # マイグレーションを DB に適用する（web/.env.local の DATABASE_URL）
 ```
@@ -62,7 +64,8 @@ pnpm db:migrate       # マイグレーションを DB に適用する（web/.en
 
 ### 品質
 
-- **完了と報告する前に、lint と型チェックが通ることを確認する**（`pnpm lint` と `pnpm typecheck`）。通らないまま「完了」と言わない。PR では CI が同じチェックを実行し、通らないとマージできない
+- **完了と報告する前に、lint・型チェック・テストが通ることを確認する**（`pnpm lint`、`pnpm typecheck`、`pnpm test`）。通らないまま「完了」と言わない。PR では CI が同じチェックを実行し、通らないとマージできない
+- **計算や入力チェックなどの処理を書いたら、テストも書く**。見た目だけの変更には書かなくてよい。テストファイルは対象のファイルの隣に `<名前>.test.ts` として置く（[docs/decisions/0012](docs/decisions/0012-test.md)）
 - **構成を変えたら、同じ変更の中で docs も更新する**（[docs/README.md](docs/README.md) の書き方のルールに従う）
 
 ### ログインとデータ

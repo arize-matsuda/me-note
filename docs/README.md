@@ -37,6 +37,7 @@ skill の中身は `.claude/skills/` にある。
 | [0009](decisions/0009-database.md) | データベースの操作と開発環境 |
 | [0010](decisions/0010-auth.md) | ログインの方法と画面 |
 | [0011](decisions/0011-deploy.md) | Vercel への公開 |
+| [0012](decisions/0012-test.md) | テスト |
 
 ## 書き方のルール
 
