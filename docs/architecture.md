@@ -23,10 +23,10 @@ PostgreSQL（Neon）✅
 
 | 要素 | 技術 | 役割 | 状態 |
 |---|---|---|---|
-| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログインまで |
+| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログインまで。体重・体脂肪率を作成中 |
 | 画面部品 | shadcn/ui（Base UI） | ボタン、フォーム、カードなど | ✅ |
 | ai | Python | 分析・要約など | 🔜 |
-| データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用のテーブルのみ |
+| データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用と体重・体脂肪率（`weight_record`）のテーブル |
 | DB の操作 | Drizzle ORM（`drizzle-orm/neon-http`）、drizzle-kit | テーブル定義、マイグレーション | ✅ |
 | ログイン | Better Auth（メールアドレスとパスワード） | ユーザー認証。ユーザー情報は自分の DB に保存 | ✅ |
 | 公開先 | Vercel（`*.vercel.app`、実行地域はシンガポール） | web の公開。main にマージすると本番に反映、PR ごとにプレビューを作る | ✅ |
@@ -100,6 +100,8 @@ me-note/
 │       │   ├── login/         # ログイン画面
 │       │   ├── signup/        # 新規登録画面
 │       │   └── api/auth/      # Better Auth の API
+│       ├── features/          # 記録の種類ごとのまとまり
+│       │   └── weight/        # 体重・体脂肪率（schema.ts: テーブル定義）
 │       └── shared/            # 複数の記録で使うもの
 │           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
 │           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
@@ -111,7 +113,7 @@ me-note/
 
 ### web/src の構成方針
 
-記録の種類ごとにまとめる。`features/` は最初の機能（体重）を作るときに作り始める 🔜。
+記録の種類ごとにまとめる。`features/` は体重・体脂肪率から作り始めた（今はテーブル定義の `schema.ts` だけ）。
 
 ```
 web/src/
