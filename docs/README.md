@@ -39,6 +39,7 @@ skill の中身は `.claude/skills/` にある。
 | [0011](decisions/0011-deploy.md) | Vercel への公開 |
 | [0012](decisions/0012-test.md) | テスト |
 | [0013](decisions/0013-spec-pr.md) | 仕様は issue を作る前に PR で main に入れる |
+| [0014](decisions/0014-no-redirect-from-login.md) | ログイン済みでも /login・/signup から移動させない |
 
 ## 書き方のルール
 

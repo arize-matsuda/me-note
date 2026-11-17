@@ -5,10 +5,13 @@ import { type NextRequest, NextResponse } from "next/server";
 const PUBLIC_PATHS = ["/login", "/signup"];
 
 /**
- * ログインしていない人を /login に、ログイン済みの人が /login・/signup を開いたらトップに移動させる。
+ * ログインしていない人を /login に移動させる。
  *
  * ここでは Cookie の有無だけを見る（大まかな判定）。Cookie が偽物や期限切れの場合もあるため、
  * データを扱うページ・Server Action では必ず getCurrentUser() でセッションを確認する。
+ *
+ * 「Cookie があればログイン済み」とみなして /login からほかへ移す処理はしない。
+ * 無効な Cookie が残っていると、/login と / の間で移動を繰り返してしまうため（decisions/0014）。
  */
 export function proxy(request: NextRequest) {
   const hasSession = getSessionCookie(request) !== null;
@@ -16,9 +19,6 @@ export function proxy(request: NextRequest) {
 
   if (!hasSession && !isPublic) {
     return NextResponse.redirect(new URL("/login", request.url));
-  }
-  if (hasSession && isPublic) {
-    return NextResponse.redirect(new URL("/", request.url));
   }
   return NextResponse.next();
 }

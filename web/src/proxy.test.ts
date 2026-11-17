@@ -30,10 +30,11 @@ describe("ログインしていない人", () => {
   });
 });
 
-describe("ログイン済みの人", () => {
-  test.each(["/login", "/signup"])("%s を開くと / に移動する", (path) => {
+describe("セッションの Cookie がある人", () => {
+  // Cookie が無効（期限切れなど）でもログインし直せるよう、/login・/signup からは移動させない
+  test.each(["/login", "/signup"])("%s もそのまま開ける", (path) => {
     const response = proxy(request(path, { loggedIn: true }));
-    expect(redirectTo(response)).toBe(`${ORIGIN}/`);
+    expect(redirectTo(response)).toBeNull();
   });
 
   test("/ はそのまま開ける", () => {
