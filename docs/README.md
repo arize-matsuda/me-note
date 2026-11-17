@@ -32,6 +32,7 @@ skill の中身は `.claude/skills/` にある。
 | [0004](decisions/0004-first-feature-weight.md) | 最初に作る記録は体重・体脂肪率 |
 | [0005](decisions/0005-development-process.md) | 開発の進め方 |
 | [0006](decisions/0006-issue-workflow.md) | issue による機能とタスクの管理 |
+| [0007](decisions/0007-branch-and-pr.md) | ブランチと PR の運用 |
 
 ## 書き方のルール
 

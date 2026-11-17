@@ -41,17 +41,19 @@ pnpm exec tsc --noEmit   # 型チェック
 
 ### issue と PR
 
-詳しくは [docs/decisions/0006](docs/decisions/0006-issue-workflow.md)。
+詳しくは [docs/decisions/0006](docs/decisions/0006-issue-workflow.md) と [0007](docs/decisions/0007-branch-and-pr.md)。
 
 - **1つの機能を親 issue、その中のタスクをサブ issue で管理する**
 - **仕様は `docs/features/<機能名>.md` に書き、親 issue からリンクする**
 - **issue は案を示し、承認されてから作成する**。テンプレートは `.github/ISSUE_TEMPLATE/` のものを使う
 - **1つのサブ issue ＝ 1つのブランチ ＝ 1つの PR**
   - ブランチ名は `<issue番号>-<短い英語名>`（例: `12-weight-table`）
-  - PR の説明に `Closes #<サブissue番号>` と書く
+  - PR の本文は `.github/pull_request_template.md` の形式で書き、`Closes #<サブissue番号>` を入れる
   - PR はサブ issue の範囲だけを扱う。範囲外の変更が必要になったら、別のサブ issue を提案する
 - **各工程は skill で進める**（`/spec` → `/issues` → `/implement` → `/finish`）
-- 土台づくりのステップ（ロードマップの「土台づくり」）は issue で管理しない
+- 土台づくりのステップ（ロードマップの「土台づくり」）は issue で管理しない。ブランチ名は内容がわかる短い英語名にする
+- **main には直接 push できない**（保護されている）。すべての変更はブランチを作って PR にする
+- **PR のマージは人が行う**（Squash merge）。AI はマージしない
 
 ### 品質
 
