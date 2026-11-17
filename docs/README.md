@@ -35,6 +35,7 @@ skill の中身は `.claude/skills/` にある。
 | [0007](decisions/0007-branch-and-pr.md) | ブランチと PR の運用 |
 | [0008](decisions/0008-ci.md) | CI で lint と型チェックを自動実行する |
 | [0009](decisions/0009-database.md) | データベースの操作と開発環境 |
+| [0010](decisions/0010-auth.md) | ログインの方法と画面 |
 
 ## 書き方のルール
 
