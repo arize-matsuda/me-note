@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import {
   Card,
   CardContent,
@@ -5,7 +8,7 @@ import {
   CardTitle,
 } from "@/shared/components/ui/card";
 import type { WeightRecord } from "../data";
-import { formatOneDecimal, formatRecordDate } from "../format";
+import { WeightListItem } from "./weight-list-item";
 
 type Props = {
   records: WeightRecord[];
@@ -13,8 +16,11 @@ type Props = {
   today: string;
 };
 
-/** 記録の一覧（新しい順） */
+/** 記録の一覧（新しい順）。行をタップすると、その行を編集できる */
 export function WeightList({ records, today }: Props) {
+  // 編集中の記録の ID。同時に編集できるのは1行だけ
+  const [editingId, setEditingId] = useState<string | null>(null);
+
   return (
     <Card>
       <CardHeader>
@@ -28,20 +34,14 @@ export function WeightList({ records, today }: Props) {
         ) : (
           <ul className="divide-y">
             {records.map((record) => (
-              <li
+              <WeightListItem
                 key={record.id}
-                className="grid grid-cols-[1fr_auto_4.5rem] items-center gap-3 py-2 text-sm tabular-nums"
-              >
-                <span>{formatRecordDate(record.date, today)}</span>
-                <span className="text-right">
-                  {formatOneDecimal(record.weight)} kg
-                </span>
-                <span className="text-right text-muted-foreground">
-                  {record.bodyFatPercentage === null
-                    ? "—"
-                    : `${formatOneDecimal(record.bodyFatPercentage)} %`}
-                </span>
-              </li>
+                record={record}
+                today={today}
+                editing={record.id === editingId}
+                onEdit={() => setEditingId(record.id)}
+                onClose={() => setEditingId(null)}
+              />
             ))}
           </ul>
         )}
