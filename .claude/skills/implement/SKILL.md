@@ -72,7 +72,7 @@ git switch -c <issue番号>-<短い英語名>
 
 ```bash
 pnpm lint
-pnpm exec tsc --noEmit
+pnpm typecheck
 ```
 
 - 通らないまま次へ進まない。どうしても直せない場合は、止めて状況を伝える
