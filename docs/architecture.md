@@ -23,11 +23,12 @@ PostgreSQL（Neon）✅
 
 | 要素 | 技術 | 役割 | 状態 |
 |---|---|---|---|
-| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ 雛形のみ |
+| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログインまで |
+| 画面部品 | shadcn/ui（Base UI） | ボタン、フォーム、カードなど | ✅ |
 | ai | Python | 分析・要約など | 🔜 |
-| データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ 接続のみ（テーブルなし） |
+| データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用のテーブルのみ（`dev` に適用済み） |
 | DB の操作 | Drizzle ORM（`drizzle-orm/neon-http`）、drizzle-kit | テーブル定義、マイグレーション | ✅ |
-| ログイン | Better Auth | ユーザー認証。ユーザー情報は自分の DB に保存 | 🔜 |
+| ログイン | Better Auth（メールアドレスとパスワード） | ユーザー認証。ユーザー情報は自分の DB に保存 | ✅ |
 | 公開先 | Vercel | web の公開 | 🔜 |
 | lint / フォーマット | Biome | コードの書き方をそろえる | ✅ |
 | 型チェック | TypeScript（`pnpm typecheck`） | 型の誤りを見つける | ✅ |
@@ -53,24 +54,43 @@ PostgreSQL（Neon）✅
 
 背景は [decisions/0009](decisions/0009-database.md)。
 
+## ログイン
+
+- `/login`（ログイン）と `/signup`（新規登録）以外の画面は、すべてログインが必要
+- `web/src/proxy.ts` が Cookie の有無だけを見て、ログインしていない人を `/login` に移動させる（大まかな判定）
+- **データを扱うページ・Server Action では、必ず `getCurrentUser()`（`web/src/shared/auth/session.ts`）でセッションを確認する**
+- `getCurrentUser()` はリクエストの情報を読むため、呼び出すコンポーネントは `<Suspense>` の中に置く（Cache Components の決まり）
+- ブラウザ側の操作（登録・ログイン・ログアウト）は `authClient`（`web/src/shared/auth/client.ts`）を使う
+- 環境変数: `BETTER_AUTH_SECRET`（ランダムな秘密の値）、`BETTER_AUTH_URL`（アプリの URL）
+
+背景は [decisions/0010](decisions/0010-auth.md)。
+
 ## ディレクトリ
 
 ```
 me-note/
-├── web/                  # Next.js
-│   ├── drizzle.config.ts # マイグレーションの設定 ✅
-│   ├── drizzle/          # マイグレーションの SQL ファイル 🔜（最初のテーブルを作るときにできる）
+├── web/                       # Next.js
+│   ├── drizzle.config.ts      # マイグレーションの設定
+│   ├── drizzle/               # マイグレーションの SQL ファイル
+│   ├── components.json        # shadcn/ui の設定（部品の置き場所など）
 │   └── src/
-│       ├── app/          # 画面（ルーティング）✅
-│       └── shared/
-│           └── db/       # DB クライアント（`db`）✅
+│       ├── proxy.ts           # ログインしていない人を /login に移動させる
+│       ├── app/               # 画面（ルーティング）
+│       │   ├── login/         # ログイン画面
+│       │   ├── signup/        # 新規登録画面
+│       │   └── api/auth/      # Better Auth の API
+│       └── shared/            # 複数の記録で使うもの
+│           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
+│           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
+│           ├── db/            # DB クライアント（`db`）
+│           └── lib/           # 共通の関数（`cn` など）
 ├── ai/              # Python 🔜（今は空）
 └── docs/            # ドキュメント
 ```
 
-### web/src の構成方針 🔜
+### web/src の構成方針
 
-記録の種類ごとにまとめる。最初の機能（体重）を作るときにこの形で作り始める。
+記録の種類ごとにまとめる。`features/` は最初の機能（体重）を作るときに作り始める 🔜。
 
 ```
 web/src/

@@ -65,6 +65,14 @@ pnpm db:migrate       # マイグレーションを DB に適用する（web/.en
 - **完了と報告する前に、lint と型チェックが通ることを確認する**（`pnpm lint` と `pnpm typecheck`）。通らないまま「完了」と言わない。PR では CI が同じチェックを実行し、通らないとマージできない
 - **構成を変えたら、同じ変更の中で docs も更新する**（[docs/README.md](docs/README.md) の書き方のルールに従う）
 
+### ログインとデータ
+
+詳しくは [docs/architecture.md](docs/architecture.md) の「ログイン」。
+
+- **データを扱うページ・Server Action では、必ず `getCurrentUser()` でセッションを確認し、そのユーザーのデータだけを読み書きする**。`proxy.ts` の判定だけに頼らない
+- `getCurrentUser()` を呼ぶコンポーネントは `<Suspense>` の中に置く
+- 画面部品は shadcn/ui を使う。追加は `pnpm dlx shadcn@latest add <部品名>`（`web/` で実行）。`src/shared/components/ui/` の中は直接書き換えない
+
 ### 言語
 
 - **返答もドキュメントも日本語で書く**
