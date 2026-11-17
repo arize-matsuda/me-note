@@ -60,6 +60,7 @@ PostgreSQL（Neon）✅
 
 - `/login`（ログイン）と `/signup`（新規登録）以外の画面は、すべてログインが必要
 - `web/src/proxy.ts` が Cookie の有無だけを見て、ログインしていない人を `/login` に移動させる（大まかな判定）
+- ログイン済みの人が `/login`・`/signup` を開いても、トップには移動させない。無効な Cookie が残っていると、移動を繰り返してしまうため（[decisions/0014](decisions/0014-no-redirect-from-login.md)）
 - **データを扱うページ・Server Action では、必ず `getCurrentUser()`（`web/src/shared/auth/session.ts`）でセッションを確認する**
 - `getCurrentUser()` はリクエストの情報を読むため、呼び出すコンポーネントは `<Suspense>` の中に置く（Cache Components の決まり）
 - ブラウザ側の操作（登録・ログイン・ログアウト）は `authClient`（`web/src/shared/auth/client.ts`）を使う
