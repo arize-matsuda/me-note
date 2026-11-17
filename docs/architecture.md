@@ -29,6 +29,8 @@ PostgreSQL（Neon）🔜
 | ログイン | Better Auth | ユーザー認証。ユーザー情報は自分の DB に保存 | 🔜 |
 | 公開先 | Vercel | web の公開 | 🔜 |
 | lint / フォーマット | Biome | コードの書き方をそろえる | ✅ |
+| 型チェック | TypeScript（`pnpm typecheck`） | 型の誤りを見つける | ✅ |
+| CI | GitHub Actions | PR ごとに lint と型チェックを実行。通らないとマージできない | ✅ |
 
 ## 守るルール
 

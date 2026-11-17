@@ -25,7 +25,7 @@
 pnpm dev              # 開発サーバー（http://localhost:3000）
 pnpm lint             # Biome（lint とフォーマットのチェック）
 pnpm format           # フォーマットを適用
-pnpm exec tsc --noEmit   # 型チェック
+pnpm typecheck        # 型チェック（next typegen + tsc）
 ```
 
 ## 振る舞いのルール
@@ -57,7 +57,7 @@ pnpm exec tsc --noEmit   # 型チェック
 
 ### 品質
 
-- **完了と報告する前に、lint と型チェックが通ることを確認する**（`pnpm lint` と `pnpm exec tsc --noEmit`）。通らないまま「完了」と言わない
+- **完了と報告する前に、lint と型チェックが通ることを確認する**（`pnpm lint` と `pnpm typecheck`）。通らないまま「完了」と言わない。PR では CI が同じチェックを実行し、通らないとマージできない
 - **構成を変えたら、同じ変更の中で docs も更新する**（[docs/README.md](docs/README.md) の書き方のルールに従う）
 
 ### 言語
