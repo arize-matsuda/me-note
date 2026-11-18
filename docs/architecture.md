@@ -77,6 +77,15 @@ PostgreSQL（Neon）✅
 - PR ごとにプレビューを作る。プレビューは `dev` ブランチの DB を使い、マイグレーションは実行しない
 - 環境変数は Vercel の管理画面で設定する（一覧は [decisions/0011](decisions/0011-deploy.md)）
 
+## 画面の骨組み
+
+- ログイン後の画面は `web/src/app/(app)/` に置く。`(app)/layout.tsx` が、PC（幅 768px 以上）では左のサイドバー、スマホでは下のバーを付ける
+- ナビゲーションの項目は `web/src/shared/navigation/nav-items.ts` にまとめる。新しい記録の画面を作ったら、ここに足す
+- PC の本文はサイドバーの右に、最大 1024px で左寄せ。スマホは下のバーと iPhone の画面下の余白の分だけ、本文の下を空ける
+- `/login`・`/signup` は `(app)` の外に置き、ナビゲーションを出さない
+
+仕様は [features/layout.md](features/layout.md)。
+
 ## テスト
 
 - テストファイルは、対象のファイルの隣に `<名前>.test.ts` として置く（例: `web/src/proxy.test.ts`）
@@ -99,9 +108,11 @@ me-note/
 │       ├── proxy.ts           # ログインしていない人を /login に移動させる
 │       ├── proxy.test.ts      # proxy.ts のテスト
 │       ├── app/               # 画面（ルーティング）
-│       │   ├── weight/        # 体重・体脂肪率の画面（入力と一覧）
-│       │   ├── login/         # ログイン画面
-│       │   ├── signup/        # 新規登録画面
+│       │   ├── (app)/         # ログイン後の画面。layout.tsx でサイドバー／下のバーを付ける（URL に (app) は出ない）
+│       │   │   ├── page.tsx   # ホーム（/）
+│       │   │   └── weight/    # 体重・体脂肪率の画面（/weight）
+│       │   ├── login/         # ログイン画面（ナビゲーションなし）
+│       │   ├── signup/        # 新規登録画面（ナビゲーションなし）
 │       │   └── api/auth/      # Better Auth の API
 │       ├── features/          # 記録の種類ごとのまとまり
 │       │   └── weight/        # 体重・体脂肪率（テーブル定義、読み書きの処理、入力チェック、画面部品）
@@ -109,6 +120,7 @@ me-note/
 │           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
 │           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
 │           ├── db/            # DB クライアント（`db`）
+│           ├── navigation/    # ナビゲーション（項目の一覧、PC のサイドバー、スマホの下のバー）
 │           └── lib/           # 共通の関数（`cn` など）
 ├── ai/              # Python 🔜（今は空）
 └── docs/            # ドキュメント
