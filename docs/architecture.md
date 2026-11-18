@@ -23,7 +23,7 @@ PostgreSQL（Neon）✅
 
 | 要素 | 技術 | 役割 | 状態 |
 |---|---|---|---|
-| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログイン、体重・体脂肪率（入力・一覧・編集・削除・推移グラフ） |
+| web | Next.js（TypeScript）、Tailwind CSS | 画面、記録の作成・編集・削除、DB スキーマの管理 | ✅ ログイン、画面の骨組み（PC はサイドバー、スマホは下のバー）、体重・体脂肪率（入力・一覧・編集・削除・推移グラフ） |
 | 画面部品 | shadcn/ui（Base UI） | ボタン、フォーム、カード、確認ダイアログなど | ✅ |
 | グラフ | recharts（shadcn/ui の chart 経由） | 推移の折れ線グラフ | ✅ |
 | ai | Python | 分析・要約など | 🔜 |
@@ -83,6 +83,7 @@ PostgreSQL（Neon）✅
 - ナビゲーションの項目は `web/src/shared/navigation/nav-items.ts` にまとめる。新しい記録の画面を作ったら、ここに足す
 - PC の本文はサイドバーの右に、最大 1024px で左寄せ。スマホは下のバーと iPhone の画面下の余白の分だけ、本文の下を空ける
 - `/login`・`/signup` は `(app)` の外に置き、ナビゲーションを出さない
+- 本文を2列にするなど、ページの中の配置を変えるのは、画面の幅が 1024px 以上（`lg`）のときにする。768〜1023px はサイドバーの右の本文が狭いため1列にする
 
 仕様は [features/layout.md](features/layout.md)。
 
