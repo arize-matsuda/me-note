@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { connection } from "next/server";
 import { Suspense } from "react";
 import { CalendarMonth } from "@/features/calendar/components/calendar-month";
 import { DayRecords } from "@/features/calendar/components/day-records";
@@ -29,6 +30,9 @@ async function CalendarSection({
   searchParams: PageProps<"/calendar">["searchParams"];
 }) {
   const { date } = await searchParams;
+  // 日付のリンクの先読み（prefetch）では URL が確定した状態でページが作られるため、
+  // searchParams を読むだけではリクエストを待たない。現在時刻を使う前に、リクエストを待つことを示す
+  await connection();
   const today = getTodayInJapan();
   const selectedDate = parseSelectedDate(date, today);
 
