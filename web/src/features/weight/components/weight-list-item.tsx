@@ -14,13 +14,14 @@ import {
 import { Button } from "@/shared/components/ui/button";
 import { Field, FieldError, FieldLabel } from "@/shared/components/ui/field";
 import { Input } from "@/shared/components/ui/input";
+import { formatRecordDate } from "@/shared/lib/date";
 import {
   deleteWeightRecord,
   updateWeightRecord,
   type WeightActionState,
 } from "../actions";
 import type { WeightRecord } from "../data";
-import { formatOneDecimal, formatRecordDate } from "../format";
+import { formatOneDecimal } from "../format";
 
 type Props = {
   record: WeightRecord;

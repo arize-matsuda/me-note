@@ -1,5 +1,6 @@
 const JAPAN_TIME_ZONE = "Asia/Tokyo";
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const WEEKDAYS = ["日", "月", "火", "水", "木", "金", "土"];
 
 /**
  * 日本時間の「今日」を `YYYY-MM-DD` で返す。
@@ -31,4 +32,15 @@ export function isValidDate(text: string): boolean {
   return (
     !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === text
   );
+}
+
+/**
+ * 一覧に表示する日付。`2026-11-18` を `11/18（水）` にする。
+ * today（`YYYY-MM-DD`）と年が違うときは `2025/11/18（火）` のように年も付ける。
+ */
+export function formatRecordDate(date: string, today: string): string {
+  const [year, month, day] = date.split("-");
+  const weekday = WEEKDAYS[new Date(`${date}T00:00:00Z`).getUTCDay()];
+  const monthDay = `${Number(month)}/${Number(day)}（${weekday}）`;
+  return year === today.slice(0, 4) ? monthDay : `${year}/${monthDay}`;
 }
