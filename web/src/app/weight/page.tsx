@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
+import { buildChartData } from "@/features/weight/chart-data";
+import { WeightChart } from "@/features/weight/components/weight-chart";
 import { WeightForm } from "@/features/weight/components/weight-form";
 import { WeightList } from "@/features/weight/components/weight-list";
 import {
   getLatestWeightRecord,
   getRecentWeightRecords,
+  getWeightRecordsForChart,
 } from "@/features/weight/data";
 import { formatOneDecimal } from "@/features/weight/format";
 import { getTodayInJapan } from "@/features/weight/today";
@@ -36,9 +39,10 @@ export default function Page() {
 }
 
 async function WeightSection() {
-  const [latest, records] = await Promise.all([
+  const [latest, records, chartRecords] = await Promise.all([
     getLatestWeightRecord(),
     getRecentWeightRecords(),
+    getWeightRecordsForChart(),
   ]);
   // ログインの確認（リクエストの情報を読む処理）のあとで、現在時刻を使う
   const today = getTodayInJapan();
@@ -54,6 +58,7 @@ async function WeightSection() {
             : ""
         }
       />
+      <WeightChart data={buildChartData(chartRecords, today)} />
       <WeightList records={records} today={today} />
     </div>
   );
