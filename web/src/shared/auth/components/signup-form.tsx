@@ -64,6 +64,9 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
 
     router.push("/");
     router.refresh();
+    // Next.js は前に開いていた画面の状態を残すため、ここで戻しておかないと、
+    // ログアウトしてこの画面に戻ったときにボタンが押せないままになる
+    setPending(false);
   }
 
   return (
