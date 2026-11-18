@@ -27,7 +27,7 @@ PostgreSQL（Neon）✅
 | 画面部品 | shadcn/ui（Base UI） | ボタン、フォーム、カード、確認ダイアログなど | ✅ |
 | グラフ | recharts（shadcn/ui の chart 経由） | 推移の折れ線グラフ | ✅ |
 | ai | Python | 分析・要約など | 🔜 |
-| データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用と体重・体脂肪率（`weight_record`）のテーブル |
+| データベース | PostgreSQL 18（Neon、シンガポール） | すべての記録とユーザー情報。ブランチ `production`（本番）と `dev`（開発） | ✅ ログイン用、体重・体脂肪率（`weight_record`）、筋トレ（`workout_exercise`・`workout_set`）のテーブル |
 | DB の操作 | Drizzle ORM（`drizzle-orm/neon-http`）、drizzle-kit | テーブル定義、マイグレーション | ✅ |
 | ログイン | Better Auth（メールアドレスとパスワード） | ユーザー認証。ユーザー情報は自分の DB に保存 | ✅ |
 | 公開先 | Vercel（`*.vercel.app`、実行地域はシンガポール） | web の公開。main にマージすると本番に反映、PR ごとにプレビューを作る | ✅ |
@@ -116,7 +116,8 @@ me-note/
 │       │   ├── signup/        # 新規登録画面（ナビゲーションなし）
 │       │   └── api/auth/      # Better Auth の API
 │       ├── features/          # 記録の種類ごとのまとまり
-│       │   └── weight/        # 体重・体脂肪率（テーブル定義、読み書きの処理、入力チェック、画面部品）
+│       │   ├── weight/        # 体重・体脂肪率（テーブル定義、読み書きの処理、入力チェック、画面部品）
+│       │   └── workout/       # 筋トレ（種目とセットのテーブル定義）
 │       └── shared/            # 複数の記録で使うもの
 │           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
 │           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
