@@ -1,4 +1,4 @@
-import { House, type LucideIcon, Weight } from "lucide-react";
+import { Dumbbell, House, type LucideIcon, Weight } from "lucide-react";
 
 export type NavItem = {
   href: string;
@@ -13,4 +13,5 @@ export type NavItem = {
 export const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "ホーム", icon: House },
   { href: "/weight", label: "体重・体脂肪率", icon: Weight },
+  { href: "/workout", label: "筋トレ", icon: Dumbbell },
 ];

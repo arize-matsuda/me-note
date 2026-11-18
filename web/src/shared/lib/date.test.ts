@@ -1,5 +1,10 @@
 import { describe, expect, test } from "vitest";
-import { addDays, getTodayInJapan, isValidDate } from "./date";
+import {
+  addDays,
+  formatRecordDate,
+  getTodayInJapan,
+  isValidDate,
+} from "./date";
 
 describe("getTodayInJapan", () => {
   test("UTC の 15:00 は、日本時間では翌日の 0:00 になる", () => {
@@ -48,5 +53,21 @@ describe("isValidDate", () => {
     "abc",
   ])("%s は正しくない", (text) => {
     expect(isValidDate(text)).toBe(false);
+  });
+});
+
+describe("formatRecordDate", () => {
+  test("今年の日付は月/日（曜日）", () => {
+    expect(formatRecordDate("2026-11-18", "2026-11-18")).toBe("11/18（水）");
+  });
+
+  test("月・日の先頭の 0 は付けない", () => {
+    expect(formatRecordDate("2026-01-05", "2026-11-18")).toBe("1/5（月）");
+  });
+
+  test("今年と違う年の日付は年も付ける", () => {
+    expect(formatRecordDate("2025-11-18", "2026-11-18")).toBe(
+      "2025/11/18（火）",
+    );
   });
 });
