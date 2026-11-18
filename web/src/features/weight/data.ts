@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, gte } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lte } from "drizzle-orm";
 import { getCurrentUser } from "@/shared/auth/session";
 import { db } from "@/shared/db";
 import { getTodayInJapan } from "@/shared/lib/date";
@@ -63,4 +63,26 @@ export async function getLatestWeightRecord(): Promise<WeightRecord | null> {
     .orderBy(desc(weightRecord.date))
     .limit(1);
   return latest ?? null;
+}
+
+/**
+ * 日付の範囲（start〜end、両端を含む）の記録を、古い順に。
+ * カレンダーなど、ほかの機能から読むために使う。
+ */
+export async function getWeightRecordsInRange(
+  start: string,
+  end: string,
+): Promise<WeightRecord[]> {
+  const user = await getCurrentUser();
+  return db
+    .select(columns)
+    .from(weightRecord)
+    .where(
+      and(
+        eq(weightRecord.userId, user.id),
+        gte(weightRecord.date, start),
+        lte(weightRecord.date, end),
+      ),
+    )
+    .orderBy(asc(weightRecord.date));
 }

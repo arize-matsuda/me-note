@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, gte } from "drizzle-orm";
+import { and, asc, desc, eq, gte, lte } from "drizzle-orm";
 import { getCurrentUser } from "@/shared/auth/session";
 import { db } from "@/shared/db";
 import { addDays, getTodayInJapan } from "@/shared/lib/date";
@@ -80,4 +80,34 @@ export async function getLastSetValues(): Promise<LastSetValues> {
   return Object.fromEntries(
     rows.map((row) => [row.exerciseId, { weight: row.weight, reps: row.reps }]),
   );
+}
+
+/**
+ * 日付の範囲（start〜end、両端を含む）のセット。古い日付が先、同じ日の中は入力した順。
+ * カレンダーなど、ほかの機能から読むために使う。
+ */
+export async function getWorkoutSetsInRange(
+  start: string,
+  end: string,
+): Promise<WorkoutSet[]> {
+  const user = await getCurrentUser();
+  return db
+    .select({
+      id: workoutSet.id,
+      date: workoutSet.date,
+      exerciseId: workoutSet.exerciseId,
+      exerciseName: workoutExercise.name,
+      weight: workoutSet.weight,
+      reps: workoutSet.reps,
+    })
+    .from(workoutSet)
+    .innerJoin(workoutExercise, eq(workoutSet.exerciseId, workoutExercise.id))
+    .where(
+      and(
+        eq(workoutSet.userId, user.id),
+        gte(workoutSet.date, start),
+        lte(workoutSet.date, end),
+      ),
+    )
+    .orderBy(asc(workoutSet.date), asc(workoutSet.createdAt));
 }
