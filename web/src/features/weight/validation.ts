@@ -1,3 +1,5 @@
+import { isValidDate } from "@/shared/lib/date";
+
 /** 入力欄の名前。フォームの name と、エラーのキーに使う */
 export type WeightField = "date" | "weight" | "bodyFatPercentage";
 
@@ -25,7 +27,6 @@ export const BODY_FAT_MAX = 75;
 
 // 小数点以下は1桁まで（例: 65、65.3）
 const ONE_DECIMAL_PATTERN = /^\d+(\.\d)?$/;
-const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 
 /** 文字列を「小数点以下1桁までの数値」として読む。読めなければ null */
 function parseOneDecimal(text: string): number | null {
@@ -33,17 +34,6 @@ function parseOneDecimal(text: string): number | null {
     return null;
   }
   return Number(text);
-}
-
-/** `YYYY-MM-DD` の形で、実際にある日付か（2月30日などは不可） */
-function isValidDate(text: string): boolean {
-  if (!DATE_PATTERN.test(text)) {
-    return false;
-  }
-  const date = new Date(`${text}T00:00:00Z`);
-  return (
-    !Number.isNaN(date.getTime()) && date.toISOString().slice(0, 10) === text
-  );
 }
 
 /** 体重をチェックする。エラーなら errors に書いて undefined を返す */

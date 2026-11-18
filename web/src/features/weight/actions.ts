@@ -4,8 +4,8 @@ import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "@/shared/auth/session";
 import { db } from "@/shared/db";
+import { getTodayInJapan } from "@/shared/lib/date";
 import { weightRecord } from "./schema";
-import { getTodayInJapan } from "./today";
 import {
   validateWeightInput,
   validateWeightValues,

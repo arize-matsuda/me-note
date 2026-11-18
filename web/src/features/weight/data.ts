@@ -1,8 +1,9 @@
 import { and, asc, desc, eq, gte } from "drizzle-orm";
 import { getCurrentUser } from "@/shared/auth/session";
 import { db } from "@/shared/db";
+import { getTodayInJapan } from "@/shared/lib/date";
 import { weightRecord } from "./schema";
-import { getChartStartDate, getTodayInJapan } from "./today";
+import { getChartStartDate } from "./today";
 
 /**
  * 体重・体脂肪率の記録を読む処理。
