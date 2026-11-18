@@ -1,5 +1,6 @@
+import { addDays } from "@/shared/lib/date";
 import type { WeightRecord } from "./data";
-import { addDays, CHART_DAYS, getChartStartDate } from "./today";
+import { CHART_DAYS, getChartStartDate } from "./today";
 
 /** グラフの1日分。記録がない日は値が null（点を打たない） */
 export type ChartPoint = {

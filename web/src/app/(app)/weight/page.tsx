@@ -10,7 +10,7 @@ import {
   getWeightRecordsForChart,
 } from "@/features/weight/data";
 import { formatOneDecimal } from "@/features/weight/format";
-import { getTodayInJapan } from "@/features/weight/today";
+import { getTodayInJapan } from "@/shared/lib/date";
 
 export const metadata: Metadata = {
   title: "体重・体脂肪率 | me-note",
