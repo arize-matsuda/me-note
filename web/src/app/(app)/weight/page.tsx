@@ -18,7 +18,7 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 p-6 md:mx-0">
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 p-6 md:mx-0 md:max-w-none">
       <h1 className="text-2xl font-semibold">体重・体脂肪率</h1>
       {/* 記録はリクエストごとに読むため、Suspense の中で表示する */}
       <Suspense fallback={<p className="text-muted-foreground">読み込み中…</p>}>
@@ -37,8 +37,10 @@ async function WeightSection() {
   // ログインの確認（リクエストの情報を読む処理）のあとで、現在時刻を使う
   const today = getTodayInJapan();
 
+  // 画面の幅が 1024px 以上（lg）のときは、上の段に入力フォームとグラフを左右に並べ、
+  // 下の段に一覧を横いっぱいに置く。それより狭いときは1列（docs/features/layout.md）
   return (
-    <div className="flex flex-col gap-6">
+    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
       <WeightForm
         today={today}
         previousWeight={latest ? formatOneDecimal(latest.weight) : ""}
@@ -49,7 +51,9 @@ async function WeightSection() {
         }
       />
       <WeightChart data={buildChartData(chartRecords, today)} />
-      <WeightList records={records} today={today} />
+      <div className="lg:col-span-2">
+        <WeightList records={records} today={today} />
+      </div>
     </div>
   );
 }
