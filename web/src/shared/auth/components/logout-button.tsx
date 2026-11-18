@@ -14,6 +14,9 @@ export function LogoutButton() {
     await authClient.signOut();
     router.push("/login");
     router.refresh();
+    // Next.js は前に開いていた画面の状態を残すため、ここで戻しておかないと、
+    // もう一度ログインしたときに「ログアウト中…」のまま押せなくなる
+    setPending(false);
   }
 
   return (

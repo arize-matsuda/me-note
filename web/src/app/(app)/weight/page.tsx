@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { Suspense } from "react";
 import { buildChartData } from "@/features/weight/chart-data";
 import { WeightChart } from "@/features/weight/components/weight-chart";
@@ -12,7 +11,6 @@ import {
 } from "@/features/weight/data";
 import { formatOneDecimal } from "@/features/weight/format";
 import { getTodayInJapan } from "@/features/weight/today";
-import { buttonVariants } from "@/shared/components/ui/button";
 
 export const metadata: Metadata = {
   title: "体重・体脂肪率 | me-note",
@@ -20,16 +18,8 @@ export const metadata: Metadata = {
 
 export default function Page() {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 p-6">
-      <div>
-        <Link
-          href="/"
-          className={buttonVariants({ variant: "link", className: "px-0" })}
-        >
-          ← トップへ
-        </Link>
-        <h1 className="text-2xl font-semibold">体重・体脂肪率</h1>
-      </div>
+    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 p-6 md:mx-0">
+      <h1 className="text-2xl font-semibold">体重・体脂肪率</h1>
       {/* 記録はリクエストごとに読むため、Suspense の中で表示する */}
       <Suspense fallback={<p className="text-muted-foreground">読み込み中…</p>}>
         <WeightSection />
