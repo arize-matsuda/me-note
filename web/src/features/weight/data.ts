@@ -86,3 +86,20 @@ export async function getWeightRecordsInRange(
     )
     .orderBy(asc(weightRecord.date));
 }
+
+/**
+ * date か、それより前でいちばん新しい記録。なければ null。
+ * ダッシュボードなど、ほかの機能から読むために使う。
+ */
+export async function getWeightRecordOnOrBefore(
+  date: string,
+): Promise<WeightRecord | null> {
+  const user = await getCurrentUser();
+  const [record] = await db
+    .select(columns)
+    .from(weightRecord)
+    .where(and(eq(weightRecord.userId, user.id), lte(weightRecord.date, date)))
+    .orderBy(desc(weightRecord.date))
+    .limit(1);
+  return record ?? null;
+}

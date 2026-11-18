@@ -111,3 +111,26 @@ export async function getWorkoutSetsInRange(
     )
     .orderBy(asc(workoutSet.date), asc(workoutSet.createdAt));
 }
+
+/**
+ * 日付の範囲（start〜end、両端を含む）で、筋トレをした日（重複なし、古い順）。
+ * ダッシュボードなど、ほかの機能から読むために使う。
+ */
+export async function getWorkoutDatesInRange(
+  start: string,
+  end: string,
+): Promise<string[]> {
+  const user = await getCurrentUser();
+  const rows = await db
+    .selectDistinct({ date: workoutSet.date })
+    .from(workoutSet)
+    .where(
+      and(
+        eq(workoutSet.userId, user.id),
+        gte(workoutSet.date, start),
+        lte(workoutSet.date, end),
+      ),
+    )
+    .orderBy(asc(workoutSet.date));
+  return rows.map((row) => row.date);
+}
