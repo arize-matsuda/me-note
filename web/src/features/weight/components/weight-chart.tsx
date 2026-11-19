@@ -21,11 +21,11 @@ type Props = {
 };
 
 const weightConfig = {
-  weight: { label: "体重（kg）", color: "var(--chart-3)" },
+  weight: { label: "体重（kg）", color: "var(--weight)" },
 } satisfies ChartConfig;
 
 const bodyFatConfig = {
-  bodyFatPercentage: { label: "体脂肪率（%）", color: "var(--chart-2)" },
+  bodyFatPercentage: { label: "体脂肪率（%）", color: "var(--body-fat)" },
 } satisfies ChartConfig;
 
 /** 直近30日の体重・体脂肪率の推移。単位が違うので、グラフを2つに分ける */

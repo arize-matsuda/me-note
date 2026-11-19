@@ -87,6 +87,15 @@ PostgreSQL（Neon）✅
 
 仕様は [features/layout.md](features/layout.md)。
 
+## 見た目
+
+- デザインは「案C ラベンダー」（薄いラベンダーの背景、白いカード、紫のメインの色）。仕様は [features/redesign.md](features/redesign.md)
+- 色は `web/src/app/globals.css` のテーマの変数で決め、画面ではその変数（`bg-primary`、`text-muted-foreground` など）を使う。画面ごとに色の値を直接書かない
+- 記録の種類ごとの色も変数にする。体重・体脂肪率は `weight`・`body-fat`（紫）、筋トレは `workout`（オレンジ。うすい背景は `workout-soft`、その上の文字は `workout-foreground`）
+- フォントは Noto Sans JP（`next/font/google`）。数字は `tabular-nums` で桁をそろえる
+- shadcn/ui の部品（`ui/`）は書き換えない。カードの影は `globals.css` で付けている
+- ダークモードには対応していない
+
 ## テスト
 
 - テストファイルは、対象のファイルの隣に `<名前>.test.ts` として置く（例: `web/src/proxy.test.ts`）
