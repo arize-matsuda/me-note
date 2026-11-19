@@ -44,3 +44,10 @@ export function formatRecordDate(date: string, today: string): string {
   const monthDay = `${Number(month)}/${Number(day)}（${weekday}）`;
   return year === today.slice(0, 4) ? monthDay : `${year}/${monthDay}`;
 }
+
+/** 見出しに出す日付。`2026-11-19` を `2026年11月19日（木）` にする */
+export function formatLongDate(date: string): string {
+  const [year, month, day] = date.split("-").map(Number);
+  const weekday = WEEKDAYS[new Date(`${date}T00:00:00Z`).getUTCDay()];
+  return `${year}年${month}月${day}日（${weekday}）`;
+}
