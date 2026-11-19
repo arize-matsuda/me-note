@@ -96,11 +96,11 @@ export function CalendarMonth({
         </table>
         <div className="flex gap-4 text-xs text-muted-foreground">
           <span className="flex items-center gap-1">
-            <span className="size-2 rounded-full bg-sky-500" aria-hidden />
+            <span className="size-2 rounded-full bg-weight" aria-hidden />
             体重・体脂肪率
           </span>
           <span className="flex items-center gap-1">
-            <span className="size-2 rounded-full bg-amber-500" aria-hidden />
+            <span className="size-2 rounded-full bg-workout" aria-hidden />
             筋トレ
           </span>
         </div>
@@ -148,8 +148,8 @@ function DayCell({
         {day}
       </span>
       <span className="flex h-1.5 gap-1" aria-hidden>
-        {hasWeight && <span className="size-1.5 rounded-full bg-sky-500" />}
-        {hasWorkout && <span className="size-1.5 rounded-full bg-amber-500" />}
+        {hasWeight && <span className="size-1.5 rounded-full bg-weight" />}
+        {hasWorkout && <span className="size-1.5 rounded-full bg-workout" />}
       </span>
     </Link>
   );

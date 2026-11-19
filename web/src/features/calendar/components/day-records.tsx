@@ -37,7 +37,7 @@ export function DayRecords({ date, today, weight, workoutSets }: Props) {
         {weight !== null && (
           <section className="flex flex-col gap-1">
             <h3 className="flex items-center gap-2 font-medium">
-              <span className="size-2 rounded-full bg-sky-500" aria-hidden />
+              <span className="size-2 rounded-full bg-weight" aria-hidden />
               体重・体脂肪率
             </h3>
             <p className="pl-4 tabular-nums">
@@ -50,7 +50,7 @@ export function DayRecords({ date, today, weight, workoutSets }: Props) {
         {exercises.length > 0 && (
           <section className="flex flex-col gap-2">
             <h3 className="flex items-center gap-2 font-medium">
-              <span className="size-2 rounded-full bg-amber-500" aria-hidden />
+              <span className="size-2 rounded-full bg-workout" aria-hidden />
               筋トレ
             </h3>
             {exercises.map((exercise) => (

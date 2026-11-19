@@ -7,7 +7,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-noto-sans-jp);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -18,6 +18,11 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  --color-weight: var(--weight);
+  --color-body-fat: var(--body-fat);
+  --color-workout: var(--workout);
+  --color-workout-soft: var(--workout-soft);
+  --color-workout-foreground: var(--workout-foreground);
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -49,38 +54,45 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
+  /* 案C ラベンダー（docs/features/redesign.md）。色はここで決め、画面ではこの変数を使う */
+  --background: #f5f5fa;
+  --foreground: #1e2030;
+  --card: #ffffff;
+  --card-foreground: #1e2030;
+  --popover: #ffffff;
+  --popover-foreground: #1e2030;
+  --primary: #5b5bd6;
+  --primary-foreground: #ffffff;
+  --secondary: #eeeefc;
+  --secondary-foreground: #4b4bc4;
+  --muted: #efeff6;
+  --muted-foreground: #5f6375;
+  --accent: #eeeefc;
+  --accent-foreground: #4b4bc4;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  --border: #e6e6ef;
+  --input: #dcdce8;
+  --ring: #5b5bd6;
+  /* 記録の種類ごとの色。体重・体脂肪率は紫、筋トレはオレンジ */
+  --weight: #5b5bd6;
+  --body-fat: #8b7fe8;
+  --workout: #f2a33a;
+  --workout-soft: #fdebd3;
+  --workout-foreground: #9a4a06;
+  --chart-1: #5b5bd6;
+  --chart-2: #8b7fe8;
+  --chart-3: #4b4bc4;
+  --chart-4: #f2a33a;
+  --chart-5: #5f6375;
+  --radius: 0.75rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #1e2030;
+  --sidebar-primary: #5b5bd6;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #eeeefc;
+  --sidebar-accent-foreground: #4b4bc4;
+  --sidebar-border: #e9e9f2;
+  --sidebar-ring: #5b5bd6;
 }
 
 .dark {
@@ -126,5 +138,10 @@
   }
   html {
     @apply font-sans;
+  }
+  /* カードにやわらかい影を付ける。ui/ の部品は書き換えず、ring と同じ box-shadow に重ねる */
+  [data-slot="card"] {
+    --tw-shadow:
+      0 1px 2px rgb(40 40 90 / 0.04), 0 4px 16px rgb(40 40 90 / 0.05);
   }
 }

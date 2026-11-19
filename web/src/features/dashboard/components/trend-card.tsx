@@ -20,10 +20,10 @@ type Props = {
   data: DashboardChartPoint[];
 };
 
-const WORKOUT_COLOR = "var(--color-amber-500)";
+const WORKOUT_COLOR = "var(--workout)";
 
 const config = {
-  weight: { label: "体重（kg）", color: "var(--chart-3)" },
+  weight: { label: "体重（kg）", color: "var(--weight)" },
   workoutMark: { label: "筋トレをした日", color: WORKOUT_COLOR },
 } satisfies ChartConfig;
 
@@ -99,16 +99,13 @@ export function TrendCard({ data }: Props) {
             <div className="flex gap-4 text-xs text-muted-foreground">
               <span className="flex items-center gap-1">
                 <span
-                  className="h-0.5 w-3 rounded-full bg-(--chart-3)"
+                  className="h-0.5 w-3 rounded-full bg-weight"
                   aria-hidden
                 />
                 体重
               </span>
               <span className="flex items-center gap-1">
-                <span
-                  className="size-2 rounded-full bg-amber-500"
-                  aria-hidden
-                />
+                <span className="size-2 rounded-full bg-workout" aria-hidden />
                 筋トレをした日
               </span>
             </div>
