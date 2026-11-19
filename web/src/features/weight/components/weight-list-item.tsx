@@ -1,5 +1,6 @@
 "use client";
 
+import { Pencil } from "lucide-react";
 import { useActionState, useState, useTransition } from "react";
 import {
   AlertDialog,
@@ -51,10 +52,10 @@ export function WeightListItem({
           type="button"
           onClick={onEdit}
           aria-label={`${dateLabel}の記録を編集する`}
-          className="grid w-full grid-cols-[1fr_auto_4.5rem] items-center gap-3 py-2 text-left text-sm tabular-nums hover:bg-muted/50"
+          className="grid min-h-11 w-full grid-cols-[1fr_auto_4rem_1.25rem] items-center gap-3 rounded-lg py-1.5 text-left text-sm tabular-nums hover:bg-muted"
         >
           <span>{dateLabel}</span>
-          <span className="text-right">
+          <span className="text-right font-bold">
             {formatOneDecimal(record.weight)} kg
           </span>
           <span className="text-right text-muted-foreground">
@@ -62,6 +63,8 @@ export function WeightListItem({
               ? "—"
               : `${formatOneDecimal(record.bodyFatPercentage)} %`}
           </span>
+          {/* 行を押すと編集できることを示す */}
+          <Pencil className="size-4 text-muted-foreground" aria-hidden />
         </button>
       </li>
     );
