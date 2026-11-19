@@ -45,9 +45,11 @@ export function WeightForm({
   );
 
   return (
-    <Card>
+    <Card className="md:[--card-spacing:--spacing(6)]">
       <CardHeader>
-        <CardTitle>記録する</CardTitle>
+        <CardTitle className="text-base font-bold md:text-[17px]">
+          記録する
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {/* チェックはサーバーの入力チェックにまとめるため、ブラウザのチェックは使わない */}
@@ -57,6 +59,7 @@ export function WeightForm({
               <FieldLabel htmlFor="date">日付</FieldLabel>
               <Input
                 id="date"
+                className="h-11"
                 name="date"
                 type="date"
                 max={today}
@@ -66,41 +69,57 @@ export function WeightForm({
               />
               <FieldError>{state.errors?.date}</FieldError>
             </Field>
-            <Field>
-              <FieldLabel htmlFor="weight">体重（kg）</FieldLabel>
-              <Input
-                id="weight"
-                name="weight"
-                type="text"
-                inputMode="decimal"
-                autoComplete="off"
-                placeholder="65.3"
-                value={weight}
-                onChange={(event) => setWeight(event.target.value)}
-                aria-invalid={state.errors?.weight !== undefined}
-              />
-              <FieldError>{state.errors?.weight}</FieldError>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="bodyFatPercentage">
-                体脂肪率（%・空でもよい）
-              </FieldLabel>
-              <Input
-                id="bodyFatPercentage"
-                name="bodyFatPercentage"
-                type="text"
-                inputMode="decimal"
-                autoComplete="off"
-                placeholder="18.5"
-                value={bodyFatPercentage}
-                onChange={(event) => setBodyFatPercentage(event.target.value)}
-                aria-invalid={state.errors?.bodyFatPercentage !== undefined}
-              />
-              <FieldError>{state.errors?.bodyFatPercentage}</FieldError>
-            </Field>
+            {/* 体重と体脂肪率は横に並べる。体重は大きめの文字にする */}
+            <div className="grid grid-cols-2 gap-3">
+              <Field>
+                <FieldLabel htmlFor="weight">体重（kg）</FieldLabel>
+                <Input
+                  id="weight"
+                  name="weight"
+                  type="text"
+                  inputMode="decimal"
+                  autoComplete="off"
+                  placeholder="65.3"
+                  className="h-13 text-xl font-bold tabular-nums md:text-xl"
+                  value={weight}
+                  onChange={(event) => setWeight(event.target.value)}
+                  aria-invalid={state.errors?.weight !== undefined}
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="bodyFatPercentage">
+                  体脂肪率（%）
+                </FieldLabel>
+                <Input
+                  id="bodyFatPercentage"
+                  name="bodyFatPercentage"
+                  type="text"
+                  inputMode="decimal"
+                  autoComplete="off"
+                  placeholder="18.5"
+                  className="h-13 text-xl font-bold tabular-nums md:text-xl"
+                  value={bodyFatPercentage}
+                  onChange={(event) => setBodyFatPercentage(event.target.value)}
+                  aria-invalid={state.errors?.bodyFatPercentage !== undefined}
+                  aria-describedby="bodyFatPercentage-hint"
+                />
+              </Field>
+            </div>
+            <p
+              id="bodyFatPercentage-hint"
+              className="-mt-3 text-xs text-muted-foreground"
+            >
+              体脂肪率は空でも保存できます
+            </p>
+            <FieldError>{state.errors?.weight}</FieldError>
+            <FieldError>{state.errors?.bodyFatPercentage}</FieldError>
             {state.message && <FieldError>{state.message}</FieldError>}
-            <div className="flex items-center gap-3">
-              <Button type="submit" disabled={pending}>
+            <div className="flex flex-col gap-2">
+              <Button
+                type="submit"
+                className="h-12 text-base font-bold"
+                disabled={pending}
+              >
                 {pending ? "保存中…" : "保存する"}
               </Button>
               {state.ok && !pending && (
