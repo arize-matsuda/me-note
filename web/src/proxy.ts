@@ -1,8 +1,11 @@
 import { getSessionCookie } from "better-auth/cookies";
 import { type NextRequest, NextResponse } from "next/server";
 
-/** ログインしていなくても開ける画面 */
-const PUBLIC_PATHS = ["/login", "/signup"];
+/**
+ * ログインしていなくても開けるもの。
+ * マニフェストは、ブラウザが Cookie を付けずに読みに来ることがあるため、ここに入れる
+ */
+const PUBLIC_PATHS = ["/login", "/signup", "/manifest.webmanifest"];
 
 /**
  * ログインしていない人を /login に移動させる。

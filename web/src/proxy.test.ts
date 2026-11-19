@@ -28,6 +28,13 @@ describe("ログインしていない人", () => {
     const response = proxy(request(path, { loggedIn: false }));
     expect(redirectTo(response)).toBeNull();
   });
+
+  test("マニフェスト（/manifest.webmanifest）はそのまま読める", () => {
+    const response = proxy(
+      request("/manifest.webmanifest", { loggedIn: false }),
+    );
+    expect(redirectTo(response)).toBeNull();
+  });
 });
 
 describe("セッションの Cookie がある人", () => {

@@ -97,6 +97,15 @@ PostgreSQL（Neon）✅
 - shadcn/ui の部品（`ui/`）は書き換えない。カードの影は `globals.css` で付けている
 - ダークモードには対応していない
 
+## ホーム画面への追加（PWA）
+
+- `web/src/app/manifest.ts` が、アプリの名前・アイコン・色・全画面で開く設定を `/manifest.webmanifest` で配る。マニフェストのアイコンは `web/public/icon-192.png`・`icon-512.png`
+- iPhone 用の設定（ホーム画面での名前、画面上部の見た目）は `web/src/app/layout.tsx` の `metadata.appleWebApp`、画面上部の色は `viewport.themeColor`。色は背景（`--background`）と合わせる
+- マニフェストはログインしていなくても読めるよう、`proxy.ts` の「ログインしていなくても開けるもの」に入れている
+- Service Worker（オフライン・通知）は入れていない
+
+仕様は [features/pwa.md](features/pwa.md)。
+
 ## テスト
 
 - テストファイルは、対象のファイルの隣に `<名前>.test.ts` として置く（例: `web/src/proxy.test.ts`）
