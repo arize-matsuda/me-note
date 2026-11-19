@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   addDays,
+  formatLongDate,
   formatRecordDate,
   getTodayInJapan,
   isValidDate,
@@ -69,5 +70,15 @@ describe("formatRecordDate", () => {
     expect(formatRecordDate("2025-11-18", "2026-11-18")).toBe(
       "2025/11/18（火）",
     );
+  });
+});
+
+describe("formatLongDate", () => {
+  test("年月日と曜日を付ける", () => {
+    expect(formatLongDate("2026-11-19")).toBe("2026年11月19日（木）");
+  });
+
+  test("月・日の先頭の 0 は付けない", () => {
+    expect(formatLongDate("2027-01-03")).toBe("2027年1月3日（日）");
   });
 });

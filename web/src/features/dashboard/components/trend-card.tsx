@@ -42,9 +42,14 @@ export function TrendCard({ data }: Props) {
   }));
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>体重と筋トレ（直近30日）</CardTitle>
+    <Card className="gap-3 md:[--card-spacing:--spacing(6)]">
+      <CardHeader className="flex items-baseline justify-between gap-3">
+        <CardTitle className="text-base font-bold md:text-[17px]">
+          体重の推移
+        </CardTitle>
+        <span className="text-xs text-muted-foreground md:text-[13px]">
+          直近30日
+        </span>
       </CardHeader>
       <CardContent className="flex flex-col gap-3">
         {weights.length === 0 && !hasWorkout ? (
@@ -78,8 +83,8 @@ export function TrendCard({ data }: Props) {
                   dataKey="weight"
                   type="monotone"
                   stroke="var(--color-weight)"
-                  strokeWidth={2}
-                  dot={{ r: 3 }}
+                  strokeWidth={2.5}
+                  dot={{ r: 3, fill: "var(--card)" }}
                   connectNulls
                   isAnimationActive={false}
                 />
@@ -87,7 +92,7 @@ export function TrendCard({ data }: Props) {
                   dataKey="workoutMark"
                   stroke="transparent"
                   dot={{
-                    r: 4,
+                    r: 3.5,
                     fill: WORKOUT_COLOR,
                     stroke: WORKOUT_COLOR,
                   }}
@@ -102,7 +107,7 @@ export function TrendCard({ data }: Props) {
                   className="h-0.5 w-3 rounded-full bg-weight"
                   aria-hidden
                 />
-                体重
+                体重（kg）
               </span>
               <span className="flex items-center gap-1">
                 <span className="size-2 rounded-full bg-workout" aria-hidden />
