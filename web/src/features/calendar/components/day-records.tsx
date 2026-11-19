@@ -28,9 +28,11 @@ export function DayRecords({ date, today, weight, workoutSets }: Props) {
   const isEmpty = weight === null && exercises.length === 0;
 
   return (
-    <Card>
+    <Card className="md:[--card-spacing:--spacing(6)]">
       <CardHeader>
-        <CardTitle>{formatRecordDate(date, today)}の記録</CardTitle>
+        <CardTitle className="text-base font-bold md:text-[17px]">
+          {formatRecordDate(date, today)}の記録
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4 text-sm">
         {isEmpty && <p className="text-muted-foreground">記録がありません。</p>}

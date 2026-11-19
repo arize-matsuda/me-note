@@ -30,9 +30,11 @@ export function WorkoutList({ sets, today }: Props) {
   const [editingId, setEditingId] = useState<string | null>(null);
 
   return (
-    <Card>
+    <Card className="md:[--card-spacing:--spacing(6)]">
       <CardHeader>
-        <CardTitle>直近30日の記録</CardTitle>
+        <CardTitle className="text-base font-bold md:text-[17px]">
+          直近30日の記録
+        </CardTitle>
       </CardHeader>
       <CardContent>
         {days.length === 0 ? (

@@ -14,8 +14,8 @@ export const metadata: Metadata = {
 
 export default function Page({ searchParams }: PageProps<"/calendar">) {
   return (
-    <main className="mx-auto flex w-full max-w-md flex-1 flex-col gap-6 p-6 md:mx-0 md:max-w-none">
-      <h1 className="text-2xl font-semibold">カレンダー</h1>
+    <main className="flex w-full flex-1 flex-col gap-4 px-4 py-5 md:gap-6 md:px-10 md:py-8">
+      <h1 className="text-2xl font-bold md:text-[28px]">カレンダー</h1>
       {/* 記録と URL はリクエストごとに読むため、Suspense の中で表示する */}
       <Suspense fallback={<p className="text-muted-foreground">読み込み中…</p>}>
         <CalendarSection searchParams={searchParams} />
@@ -47,7 +47,7 @@ async function CalendarSection({
 
   // 画面の幅が 1024px 以上（lg）のときは、カレンダーと選んだ日の記録を左右に並べる
   return (
-    <div className="grid grid-cols-1 items-start gap-6 lg:grid-cols-2">
+    <div className="grid grid-cols-1 items-start gap-4 md:gap-6 lg:grid-cols-2">
       <CalendarMonth
         selectedDate={selectedDate}
         today={today}

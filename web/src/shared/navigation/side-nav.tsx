@@ -4,6 +4,7 @@ import { cn } from "cn";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { BrandMark } from "@/shared/components/brand-mark";
 import { isActive } from "./is-active";
 import { NAV_ITEMS } from "./nav-items";
 
@@ -18,15 +19,7 @@ export function SideNav({ user }: Props) {
 
   return (
     <aside className="fixed inset-y-0 left-0 hidden w-60 flex-col gap-7 border-r border-sidebar-border bg-sidebar px-4 py-6 md:flex">
-      <p className="flex items-center gap-2.5 px-2 text-xl font-bold">
-        <span
-          className="flex size-8 items-center justify-center rounded-[10px] bg-primary text-base text-primary-foreground"
-          aria-hidden
-        >
-          m
-        </span>
-        me-note
-      </p>
+      <BrandMark className="px-2 text-xl" />
       <nav aria-label="メニュー" className="flex flex-1 flex-col gap-1">
         {NAV_ITEMS.map(({ href, label, icon: Icon }) => {
           const active = isActive(pathname, href);

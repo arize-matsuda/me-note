@@ -40,7 +40,7 @@ export function CalendarMonth({
   const monthLabel = `${year}年${month}月`;
 
   return (
-    <Card>
+    <Card className="md:[--card-spacing:--spacing(6)]">
       <CardHeader>
         <div className="flex items-center justify-between gap-2">
           <Link
@@ -50,7 +50,9 @@ export function CalendarMonth({
           >
             <ChevronLeft aria-hidden />
           </Link>
-          <CardTitle>{monthLabel}</CardTitle>
+          <CardTitle className="text-base font-bold md:text-[17px]">
+            {monthLabel}
+          </CardTitle>
           <Link
             href={calendarHref(shiftMonth(monthStart, 1))}
             className={buttonVariants({ variant: "ghost", size: "icon" })}
@@ -141,7 +143,7 @@ function DayCell({
         "flex h-12 flex-col items-center justify-center gap-1 rounded-lg",
         inMonth ? "text-foreground" : "text-muted-foreground/50",
         isSelected ? "bg-primary text-primary-foreground" : "hover:bg-muted/60",
-        isToday && !isSelected && "ring-1 ring-foreground/40",
+        isToday && !isSelected && "ring-2 ring-primary",
       )}
     >
       <span className={cn("leading-none", isToday && "font-semibold")}>
