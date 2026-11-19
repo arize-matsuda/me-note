@@ -74,9 +74,11 @@ export function WorkoutForm({ today, exercises, lastValues }: Props) {
   }
 
   return (
-    <Card>
+    <Card className="md:[--card-spacing:--spacing(6)]">
       <CardHeader>
-        <CardTitle>記録する</CardTitle>
+        <CardTitle className="text-base font-bold md:text-[17px]">
+          記録する
+        </CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-6">
         {/* チェックはサーバーの入力チェックにまとめるため、ブラウザのチェックは使わない */}

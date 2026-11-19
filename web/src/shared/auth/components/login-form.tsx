@@ -59,7 +59,7 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>ログイン</CardTitle>
+          <CardTitle className="text-lg font-bold">ログイン</CardTitle>
           <CardDescription>
             メールアドレスとパスワードを入力してください
           </CardDescription>
@@ -90,7 +90,7 @@ export function LoginForm({
               </Field>
               {error && <FieldError>{error}</FieldError>}
               <Field>
-                <Button type="submit" disabled={pending}>
+                <Button type="submit" className="h-11" disabled={pending}>
                   {pending ? "ログイン中…" : "ログイン"}
                 </Button>
                 <FieldDescription className="text-center">

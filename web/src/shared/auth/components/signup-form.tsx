@@ -72,7 +72,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
   return (
     <Card {...props}>
       <CardHeader>
-        <CardTitle>新規登録</CardTitle>
+        <CardTitle className="text-lg font-bold">新規登録</CardTitle>
         <CardDescription>アカウントを作成します</CardDescription>
       </CardHeader>
       <CardContent>
@@ -126,7 +126,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
             </Field>
             {error && <FieldError>{error}</FieldError>}
             <Field>
-              <Button type="submit" disabled={pending}>
+              <Button type="submit" className="h-11" disabled={pending}>
                 {pending ? "登録中…" : "登録する"}
               </Button>
               <FieldDescription className="px-6 text-center">
