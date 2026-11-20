@@ -66,6 +66,8 @@ export async function createExercise(
   }
 
   revalidatePath(WORKOUT_PAGE);
+  // メニューの管理ページでも、種目の選択肢に出す
+  revalidatePath("/workout/menus");
   return { ok: true, exercise: created };
 }
 

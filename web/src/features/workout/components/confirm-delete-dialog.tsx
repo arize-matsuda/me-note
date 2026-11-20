@@ -14,6 +14,8 @@ import {
 type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  /** 確認の見出し。省略すると「記録を削除しますか？」 */
+  title?: string;
   /** 何を削除するかの説明（例: 「11/18（水）のベンチプレスの記録（3セット）を削除します。」） */
   description: string;
   onConfirm: () => void;
@@ -23,6 +25,7 @@ type Props = {
 export function ConfirmDeleteDialog({
   open,
   onOpenChange,
+  title = "記録を削除しますか？",
   description,
   onConfirm,
 }: Props) {
@@ -30,7 +33,7 @@ export function ConfirmDeleteDialog({
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent size="sm">
         <AlertDialogHeader>
-          <AlertDialogTitle>記録を削除しますか？</AlertDialogTitle>
+          <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>
             {description}元に戻せません。
           </AlertDialogDescription>
