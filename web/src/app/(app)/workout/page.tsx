@@ -9,6 +9,7 @@ import {
   getLastSetValues,
   getRecentWorkoutSets,
 } from "@/features/workout/data";
+import { getMenus } from "@/features/workout-menu/data";
 import { buttonVariants } from "@/shared/components/ui/button";
 import { getTodayInJapan } from "@/shared/lib/date";
 import { cn } from "@/shared/lib/utils";
@@ -39,10 +40,11 @@ export default function Page() {
 }
 
 async function WorkoutSection() {
-  const [exercises, sets, lastValues] = await Promise.all([
+  const [exercises, sets, lastValues, menus] = await Promise.all([
     getExercises(),
     getRecentWorkoutSets(),
     getLastSetValues(),
+    getMenus(),
   ]);
   // ログインの確認（リクエストの情報を読む処理）のあとで、現在時刻を使う
   const today = getTodayInJapan();
@@ -54,6 +56,8 @@ async function WorkoutSection() {
         today={today}
         exercises={exercises}
         lastValues={lastValues}
+        menus={menus}
+        sets={sets}
       />
       <WorkoutList sets={sets} today={today} />
     </div>
