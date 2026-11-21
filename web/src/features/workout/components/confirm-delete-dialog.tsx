@@ -16,6 +16,8 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   /** 確認の見出し。省略すると「記録を削除しますか？」 */
   title?: string;
+  /** 「元に戻せません。」を付けるか。省略すると付ける */
+  irreversible?: boolean;
   /** 何を削除するかの説明（例: 「11/18（水）のベンチプレスの記録（3セット）を削除します。」） */
   description: string;
   onConfirm: () => void;
@@ -26,6 +28,7 @@ export function ConfirmDeleteDialog({
   open,
   onOpenChange,
   title = "記録を削除しますか？",
+  irreversible = true,
   description,
   onConfirm,
 }: Props) {
@@ -35,7 +38,8 @@ export function ConfirmDeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>{title}</AlertDialogTitle>
           <AlertDialogDescription>
-            {description}元に戻せません。
+            {description}
+            {irreversible && "元に戻せません。"}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
