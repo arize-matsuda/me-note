@@ -13,7 +13,7 @@ import { user } from "@/shared/auth/schema";
 
 /**
  * 筋トレの種目。ユーザーごとに登録する（例: ベンチプレス）。
- * 仕様は docs/features/workout.md。
+ * 仕様は docs/features/workout.md、編集（名前・並び順・削除）は docs/features/workout-exercises.md。
  */
 export const workoutExercise = pgTable(
   "workout_exercise",
@@ -23,9 +23,14 @@ export const workoutExercise = pgTable(
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
+    // 種目を選ぶところでの並び順（小さいほうが上）。新しい種目は一番下に入れる
+    position: integer("position").notNull().default(0),
+    // 削除した日時。削除しても記録（セット）を残すため、種目そのものは消さずに印を付ける。
+    // 削除した種目は選択肢に出さない。同じ名前で追加すると、印を外して戻す
+    deletedAt: timestamp("deleted_at"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
   },
-  // 同じユーザーの中で同じ名前の種目は1つだけ
+  // 同じユーザーの中で同じ名前の種目は1つだけ（削除した種目を含む）
   (table) => [
     unique("workout_exercise_user_id_name_unique").on(table.userId, table.name),
   ],

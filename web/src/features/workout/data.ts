@@ -1,4 +1,4 @@
-import { and, asc, desc, eq, gte, lte } from "drizzle-orm";
+import { and, asc, desc, eq, gte, isNull, lte } from "drizzle-orm";
 import { getCurrentUser } from "@/shared/auth/session";
 import { db } from "@/shared/db";
 import { addDays, getTodayInJapan } from "@/shared/lib/date";
@@ -32,14 +32,19 @@ export type LastSetValues = Record<
   { weight: number | null; reps: number }
 >;
 
-/** 登録した種目（登録した順） */
+/** 登録した種目（削除したものを除く。並び順どおり） */
 export async function getExercises(): Promise<Exercise[]> {
   const user = await getCurrentUser();
   return db
     .select({ id: workoutExercise.id, name: workoutExercise.name })
     .from(workoutExercise)
-    .where(eq(workoutExercise.userId, user.id))
-    .orderBy(asc(workoutExercise.createdAt));
+    .where(
+      and(
+        eq(workoutExercise.userId, user.id),
+        isNull(workoutExercise.deletedAt),
+      ),
+    )
+    .orderBy(asc(workoutExercise.position), asc(workoutExercise.createdAt));
 }
 
 /** 直近 LIST_DAYS 日分（今日を含む）のセット。新しい日付が先、同じ日の中は入力した順 */

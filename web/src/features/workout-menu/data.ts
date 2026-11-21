@@ -69,3 +69,25 @@ export async function getMenu(id: string): Promise<WorkoutMenu | null> {
     .orderBy(asc(workoutMenuExercise.position));
   return { ...menu, exercises };
 }
+
+/** 種目ごとの、その種目が入っているメニューの名前（メニューを作った順）。種目を削除するときの確認に使う */
+export async function getMenuNamesByExercise(): Promise<
+  Record<string, string[]>
+> {
+  const user = await getCurrentUser();
+  const rows = await db
+    .select({
+      exerciseId: workoutMenuExercise.exerciseId,
+      menuName: workoutMenu.name,
+    })
+    .from(workoutMenuExercise)
+    .innerJoin(workoutMenu, eq(workoutMenuExercise.menuId, workoutMenu.id))
+    .where(eq(workoutMenuExercise.userId, user.id))
+    .orderBy(asc(workoutMenu.createdAt));
+  const result: Record<string, string[]> = {};
+  for (const row of rows) {
+    result[row.exerciseId] ??= [];
+    result[row.exerciseId].push(row.menuName);
+  }
+  return result;
+}

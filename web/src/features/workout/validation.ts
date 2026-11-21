@@ -125,3 +125,27 @@ export function validateSetInput(
   }
   return { ok: true, value: { date, exerciseId, ...values.value } };
 }
+
+/**
+ * 種目の並び順をチェックする。
+ * ids は新しい並び（上から順）。activeIds（削除していない自分の種目）をちょうど1回ずつ含むこと。
+ */
+export function validateExerciseOrder(
+  ids: string[],
+  activeIds: string[],
+): { ok: true } | { ok: false; message: string } {
+  const unique = new Set(ids);
+  const active = new Set(activeIds);
+  if (
+    unique.size !== ids.length ||
+    unique.size !== active.size ||
+    !ids.every((id) => active.has(id))
+  ) {
+    return {
+      ok: false,
+      message:
+        "種目が変わったため並べ替えられませんでした。ページを開き直してください。",
+    };
+  }
+  return { ok: true };
+}
