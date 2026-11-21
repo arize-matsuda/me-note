@@ -1,4 +1,4 @@
-import { ListOrdered } from "lucide-react";
+import { Dumbbell, ListOrdered } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -21,15 +21,30 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <main className="flex w-full flex-1 flex-col gap-4 px-4 py-5 md:gap-6 md:px-10 md:py-8">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-2xl font-bold md:text-[28px]">筋トレ</h1>
-        <Link
-          href="/workout/menus"
-          className={cn(buttonVariants({ variant: "outline" }), "h-11 gap-1.5")}
-        >
-          <ListOrdered aria-hidden="true" />
-          メニューを管理
-        </Link>
+        <div className="flex flex-wrap gap-2">
+          <Link
+            href="/workout/exercises"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-11 gap-1.5",
+            )}
+          >
+            <Dumbbell aria-hidden="true" />
+            種目を管理
+          </Link>
+          <Link
+            href="/workout/menus"
+            className={cn(
+              buttonVariants({ variant: "outline" }),
+              "h-11 gap-1.5",
+            )}
+          >
+            <ListOrdered aria-hidden="true" />
+            メニューを管理
+          </Link>
+        </div>
       </div>
       {/* 記録はリクエストごとに読むため、Suspense の中で表示する */}
       <Suspense fallback={<p className="text-muted-foreground">読み込み中…</p>}>
