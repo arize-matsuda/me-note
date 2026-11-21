@@ -95,6 +95,7 @@ PostgreSQL（Neon）✅
 - 記録の種類ごとの色も変数にする。体重・体脂肪率は `weight`・`body-fat`（紫）、筋トレは `workout`（オレンジ。うすい背景は `workout-soft`、その上の文字は `workout-foreground`）
 - フォントは Noto Sans JP（`next/font/google`）。数字は `tabular-nums` で桁をそろえる
 - shadcn/ui の部品（`ui/`）は書き換えない。カードの影は `globals.css` で付けている
+- プルダウンは、ブラウザ標準の `<select>` ではなく `AppSelect`（`web/src/shared/components/app-select.tsx`。shadcn/ui の Select をアプリの見た目にそろえたもの）を使う。仕様は [features/select.md](features/select.md)
 - ダークモードには対応していない
 
 ## ホーム画面への追加（PWA）
@@ -144,6 +145,7 @@ me-note/
 │       │   └── dashboard/     # ダッシュボード（体重の増減・筋トレの日数などの計算、画面部品。体重・筋トレの data.ts を読む）
 │       └── shared/            # 複数の記録で使うもの
 │           ├── auth/          # ログイン（設定、テーブル定義、getCurrentUser、画面部品）
+│           ├── components/    # アプリ共通の画面部品（ロゴ、プルダウン）
 │           ├── components/ui/ # shadcn/ui の部品（lint の対象外）
 │           ├── db/            # DB クライアント（`db`）
 │           ├── navigation/    # ナビゲーション（項目の一覧、PC のサイドバー、スマホの下のバー）

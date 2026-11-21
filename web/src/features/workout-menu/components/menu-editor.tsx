@@ -9,6 +9,7 @@ import {
 } from "react";
 import { NewExercise } from "@/features/workout/components/new-exercise";
 import type { Exercise } from "@/features/workout/data";
+import { AppSelect } from "@/shared/components/app-select";
 import { Button } from "@/shared/components/ui/button";
 import {
   Field,
@@ -36,9 +37,6 @@ type Props = {
   /** 「やめる」を押したとき。省略するとボタンを出さない */
   onCancel?: () => void;
 };
-
-const SELECT_CLASS =
-  "h-11 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive md:text-sm";
 
 /** メニューの名前と種目の並びを入力するフォーム（作る・直すの両方で使う） */
 export function MenuEditor({
@@ -188,31 +186,28 @@ export function MenuEditor({
                 まだ種目が入っていません。下から選んで足してください。
               </p>
             )}
-            <select
+            <AppSelect
               id={`${idPrefix}-add`}
-              className={SELECT_CLASS}
-              value=""
-              onChange={(event) => {
-                const exercise = choices.find(
-                  (e) => e.id === event.target.value,
-                );
+              options={choices.map((exercise) => ({
+                value: exercise.id,
+                label: exercise.name,
+              }))}
+              // 選んだ種目はメニューに足し、プルダウンは「種目を選んで足す」に戻す
+              value={null}
+              onValueChange={(value) => {
+                const exercise = choices.find((e) => e.id === value);
                 if (exercise !== undefined) {
                   addExercise(exercise);
                 }
               }}
-              aria-invalid={state.errors?.exerciseIds !== undefined}
-            >
-              <option value="">
-                {choices.length > 0
+              placeholder={
+                choices.length > 0
                   ? "種目を選んで足す"
-                  : "足せる種目がありません"}
-              </option>
-              {choices.map((exercise) => (
-                <option key={exercise.id} value={exercise.id}>
-                  {exercise.name}
-                </option>
-              ))}
-            </select>
+                  : "足せる種目がありません"
+              }
+              disabled={choices.length === 0}
+              invalid={state.errors?.exerciseIds !== undefined}
+            />
             <FieldError>{state.errors?.exerciseIds}</FieldError>
           </Field>
           {state.message && <FieldError>{state.message}</FieldError>}
