@@ -1,6 +1,6 @@
 "use server";
 
-import { and, eq, inArray, ne } from "drizzle-orm";
+import { and, eq, inArray, isNull, ne } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { workoutExercise } from "@/features/workout/schema";
 import { isUuid } from "@/features/workout/validation";
@@ -54,6 +54,8 @@ async function ownsAllExercises(userId: string, exerciseIds: string[]) {
       and(
         eq(workoutExercise.userId, userId),
         inArray(workoutExercise.id, exerciseIds),
+        // 削除した種目はメニューに入れられない
+        isNull(workoutExercise.deletedAt),
       ),
     );
   return rows.length === exerciseIds.length;

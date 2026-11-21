@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
   validateExerciseName,
+  validateExerciseOrder,
   validateSetInput,
   validateSetValues,
 } from "./validation";
@@ -138,5 +139,27 @@ describe("validateSetValues", () => {
       ok: true,
       value: { weight: null, reps: 12 },
     });
+  });
+});
+
+describe("validateExerciseOrder", () => {
+  const A = "11111111-1111-4111-8111-111111111111";
+  const B = "22222222-2222-4222-8222-222222222222";
+  const C = "33333333-3333-4333-8333-333333333333";
+
+  test("今ある種目をちょうど1回ずつ並べ替えたものなら通る", () => {
+    expect(validateExerciseOrder([C, A, B], [A, B, C])).toEqual({ ok: true });
+  });
+
+  test("足りない種目があるとエラー", () => {
+    expect(validateExerciseOrder([A, B], [A, B, C]).ok).toBe(false);
+  });
+
+  test("知らない種目（削除した種目やほかの人の種目）があるとエラー", () => {
+    expect(validateExerciseOrder([A, B, C], [A, B]).ok).toBe(false);
+  });
+
+  test("同じ種目が2回あるとエラー", () => {
+    expect(validateExerciseOrder([A, A, B], [A, B, C]).ok).toBe(false);
   });
 });

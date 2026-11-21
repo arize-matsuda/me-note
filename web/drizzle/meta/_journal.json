@@ -29,6 +29,13 @@
       "when": 1795179486586,
       "tag": "0003_workout_menu",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1795234550266,
+      "tag": "0004_workout_exercise_edit",
+      "breakpoints": true
     }
   ]
 }
