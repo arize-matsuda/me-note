@@ -9,6 +9,7 @@ import {
 import { MenuRecord } from "@/features/workout-menu/components/menu-record";
 import type { WorkoutMenu } from "@/features/workout-menu/group";
 import { useSelectedMenuId } from "@/features/workout-menu/use-selected-menu-id";
+import { AppSelect } from "@/shared/components/app-select";
 import { Button } from "@/shared/components/ui/button";
 import {
   Card,
@@ -43,8 +44,8 @@ const SET_FORM_ID = "workout-set-form";
 
 const initialState: WorkoutActionState = {};
 
-const SELECT_CLASS =
-  "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 py-1 text-base outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 aria-invalid:border-destructive md:text-sm dark:bg-input/30";
+/** メニューの「使わない」の value */
+const NO_MENU = "none";
 
 /** 筋トレのセットを記録するフォーム */
 export function WorkoutForm({
@@ -118,19 +119,17 @@ export function WorkoutForm({
           {menus.length > 0 && (
             <Field>
               <FieldLabel htmlFor="workout-menu">メニュー</FieldLabel>
-              <select
+              <AppSelect
                 id="workout-menu"
-                className={SELECT_CLASS}
-                value={menu?.id ?? ""}
-                onChange={(event) => setMenuId(event.target.value)}
-              >
-                <option value="">使わない</option>
-                {menus.map((m) => (
-                  <option key={m.id} value={m.id}>
-                    {m.name}
-                  </option>
-                ))}
-              </select>
+                options={[
+                  { value: NO_MENU, label: "使わない" },
+                  ...menus.map((m) => ({ value: m.id, label: m.name })),
+                ]}
+                value={menu?.id ?? NO_MENU}
+                onValueChange={(value) =>
+                  setMenuId(value === NO_MENU ? "" : value)
+                }
+              />
             </Field>
           )}
         </FieldGroup>
@@ -147,21 +146,18 @@ export function WorkoutForm({
               <FieldGroup>
                 <Field>
                   <FieldLabel htmlFor="workout-exercise">種目</FieldLabel>
-                  <select
+                  <AppSelect
                     id="workout-exercise"
                     name="exerciseId"
-                    className={SELECT_CLASS}
-                    value={exerciseId}
-                    onChange={(event) => selectExercise(event.target.value)}
-                    aria-invalid={state.errors?.exerciseId !== undefined}
-                  >
-                    <option value="">種目を選ぶ</option>
-                    {exercises.map((exercise) => (
-                      <option key={exercise.id} value={exercise.id}>
-                        {exercise.name}
-                      </option>
-                    ))}
-                  </select>
+                    options={exercises.map((exercise) => ({
+                      value: exercise.id,
+                      label: exercise.name,
+                    }))}
+                    value={exerciseId === "" ? null : exerciseId}
+                    onValueChange={selectExercise}
+                    placeholder="種目を選ぶ"
+                    invalid={state.errors?.exerciseId !== undefined}
+                  />
                   <FieldError>{state.errors?.exerciseId}</FieldError>
                 </Field>
                 <div className="grid grid-cols-2 gap-3">
